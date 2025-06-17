@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function get_all_provider(){
-        $provider=User::with('services','rating','locations','image');
+        $provider=User::with('services','locations','image');
         return response()->json([
             'status'=>200,
             'provider'=>$provider,
@@ -19,7 +19,7 @@ class AdminController extends Controller
     }
 
     public function get_service(){
-        $service=Service::with('category');
+        $service=Service::with('category,images');
         return response()->json([
             'status'=>200,
             'service'=>$service,
