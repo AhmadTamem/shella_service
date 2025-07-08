@@ -121,7 +121,7 @@ class AuthController extends Controller
             }
 
             if (!Hash::check($validatedData['old_password'], $user->password)) {
-                return response()->json(['status' => 'error', 'message' => 'Old password does not match'], 402);
+                return response()->json(['status' => 'error', 'message' => 'Old password does  not match'], 402);
             }
 
             $user->update(['password' => bcrypt($validatedData['new_password'])]);

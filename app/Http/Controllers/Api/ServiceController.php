@@ -41,7 +41,8 @@ class ServiceController extends Controller
             'category_id'=>'required|exists:categories,id',
             'name'=>'required|string|max:265',
             'description'=>'required|string|max:265',
-            'status' => 'in:active,notactive'
+            'price'=>'required|numeric',
+            'status' =>'in:active,notactive',
         ]);
         if($validator->fails())
         {
@@ -56,13 +57,13 @@ class ServiceController extends Controller
                 'category_id'=>$request->category_id,
                 'name'=>$request->name,
                 'description'=>$request->description,
+                'price'=>$request->price,
                 'status' =>$request->status ?? 'notactive'
             ]);
             if($service){
                 return response()->json([
                     'status'=>200,
                     'message'=>"Service Added Successfully",
-                    'data' =>$service
                 ],200);
             }
             else{
@@ -100,10 +101,11 @@ class ServiceController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $validator = Validator::make($request->all(),[
-            'category_id'=>'required|exists:categories,id',
-            'name'=>'required|string|max:265',
-            'description'=>'required|string|max:265',
-             'status' =>$request->status ?? 'active'
+            'category_id'=>'nullable|exists:categories,id',
+            'name'=>'nullable|string|max:265',
+            'description'=>'nullable|string|max:265',
+            'price'=>'nullable|numeric',
+            'status' =>'nullable|in:active,notactive',
         ]);
         if($validator->fails())
         {
@@ -119,7 +121,8 @@ class ServiceController extends Controller
                     'category_id'=>$request->category_id,
                     'name'=>$request->name,
                     'description'=>$request->description,
-                    'status' =>$request->status 
+                    'price'=>$request->price,
+                    'status'=>$request->status
                 ]);
                 return response()->json([
                     'status'=>200,
